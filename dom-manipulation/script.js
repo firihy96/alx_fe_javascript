@@ -22,18 +22,31 @@ function randomIntFromInterval(arrLength) {
 }
 // DOM elements selection
 let quoteDisplay = document.getElementById("quoteDisplay"),
-  newQuoteBtn = document.getElementById("newQuote");
-//
-function showRandomQuote(){
-	let randomQuoteIndex = randomIntFromInterval(quotes.length);
-	let randomQuote = quotes[randomQuoteIndex].quote,
-	randomQuoteCat = quotes[randomQuoteIndex].category;
+  newQuoteBtn = document.getElementById("newQuote"),
+  newQuoteText = document.getElementById("newQuoteText"),
+  newQuoteCategory = document.getElementById("newQuoteCategory");
+addQuoteBtn = document.querySelector("#newQuoteCategory + button");
+// selecting random quote
+function showRandomQuote() {
+  let randomQuoteIndex = randomIntFromInterval(quotes.length);
+  let randomQuote = quotes[randomQuoteIndex].text,
+    randomQuoteCat = quotes[randomQuoteIndex].category;
 
-	quoteDisplay.innerHTML = '<q>' + randomQuote + '</q>';
+  quoteDisplay.innerHTML = "<q>" + randomQuote + "</q>";
 }
-// triggering new quote
-newQuoteBtn.addEventListener('click', showRandomQuote)
-// After parsing html 
+function createAddQuoteForm() {
+  if (!newQuoteText.value || !newQuoteCategory.value) {
+    addQuoteBtn.innerText = "Please, Enter quote";
+  } else {
+    addQuoteBtn.innerText = "Add Quote";
+    quotes.push({ text: newQuoteText.value, category: newQuoteCategory.value });
+		newQuoteText.value ='';
+		newQuoteCategory.value='';
+  }
+}
+// After parsing html
 document.addEventListener("DOMContentLoaded", () => {
-
+  newQuoteBtn.addEventListener("click", showRandomQuote);
+  addQuoteBtn.addEventListener("click", createAddQuoteForm);
 });
+// onclick="addQuote()"
