@@ -23,15 +23,16 @@ function randomIntFromInterval(arrLength) {
 // DOM elements selection
 let quoteDisplay = document.getElementById("quoteDisplay"),
   newQuoteBtn = document.getElementById("newQuote");
-
-// triggering new quote
-newQuoteBtn.addEventListener('click', ()=>{
+//
+function showRandomQuote(){
 	let randomQuoteIndex = randomIntFromInterval(quotes.length);
 	let randomQuote = quotes[randomQuoteIndex].quote,
 	randomQuoteCat = quotes[randomQuoteIndex].category;
 
-	quoteDisplay.textContent = randomQuote;
-})
+	quoteDisplay.innerHTML = '<q>' + randomQuote + '</q>';
+}
+// triggering new quote
+newQuoteBtn.addEventListener('click', showRandomQuote)
 // After parsing html 
 document.addEventListener("DOMContentLoaded", () => {
 
