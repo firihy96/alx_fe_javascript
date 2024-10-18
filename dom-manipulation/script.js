@@ -25,28 +25,61 @@ let quoteDisplay = document.getElementById("quoteDisplay"),
   newQuoteBtn = document.getElementById("newQuote"),
   newQuoteText = document.getElementById("newQuoteText"),
   newQuoteCategory = document.getElementById("newQuoteCategory");
-addQuoteBtn = document.querySelector("#newQuoteCategory + button");
 // selecting random quote
 function showRandomQuote() {
   let randomQuoteIndex = randomIntFromInterval(quotes.length);
   let randomQuote = quotes[randomQuoteIndex].text,
     randomQuoteCat = quotes[randomQuoteIndex].category;
-
   quoteDisplay.innerHTML = "<q>" + randomQuote + "</q>";
 }
+// create quote adding form
+/* 
+<div>
+      <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
+      <input
+        id="newQuoteCategory"
+        type="text"
+        placeholder="Enter quote category"
+      />
+      <button onclick="addQuote()">Add Quote</button>
+    </div>
+*/
+
+let quoteFormDiv = document.createElement("div"),
+	userInputQuoteText = document.createElement("input"),
+	userInputQuoteCategory = document.createElement("input"),
+	addQuoteBtn = document.createElement("button");
+	addQuoteBtn.textContent = 'Add Quote';
 function createAddQuoteForm() {
-  if (!newQuoteText.value || !newQuoteCategory.value) {
+  // adding attributes
+  userInputQuoteText.setAttribute("id", "newQuoteText");
+  userInputQuoteText.setAttribute("type", "text");
+  userInputQuoteText.setAttribute("placeholder", "Enter a new quote");
+  userInputQuoteCategory.setAttribute("id", "newQuoteCategory");
+  userInputQuoteCategory.setAttribute("type", "text");
+  userInputQuoteCategory.setAttribute("placeholder", "Enter quote category");
+  addQuoteBtn.setAttribute("onClick", addQuote);
+	//structuring
+	quoteFormDiv.appendChild(userInputQuoteText);
+	quoteFormDiv.appendChild(userInputQuoteCategory);
+	quoteFormDiv.appendChild(addQuoteBtn)
+	document.querySelector('body').appendChild(quoteFormDiv)
+}
+
+
+function addQuote() {
+  if (!userInputQuoteText.value || !userInputQuoteCategory.value) {
     addQuoteBtn.innerText = "Please, Enter quote";
   } else {
     addQuoteBtn.innerText = "Add Quote";
-    quotes.push({ text: newQuoteText.value, category: newQuoteCategory.value });
-		newQuoteText.value ='';
-		newQuoteCategory.value='';
+    quotes.push({ text: userInputQuoteText.value, category: userInputQuoteCategory.value });
+    userInputQuoteText.value = "";
+    userInputQuoteCategory.value = "";
   }
 }
 // After parsing html
 document.addEventListener("DOMContentLoaded", () => {
   newQuoteBtn.addEventListener("click", showRandomQuote);
-  addQuoteBtn.addEventListener("click", createAddQuoteForm);
+	createAddQuoteForm()
+  addQuoteBtn.addEventListener("click", addQuote);
 });
-// onclick="addQuote()"
