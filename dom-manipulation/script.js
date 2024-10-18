@@ -27,24 +27,13 @@ let quoteDisplay = document.getElementById("quoteDisplay"),
   newQuoteCategory = document.getElementById("newQuoteCategory");
 // selecting random quote
 function showRandomQuote() {
+	quotes = [...JSON.parse(window.localStorage.getItem('quotes'))]
   let randomQuoteIndex = randomIntFromInterval(quotes.length);
   let randomQuote = quotes[randomQuoteIndex].text,
     randomQuoteCat = quotes[randomQuoteIndex].category;
   quoteDisplay.innerHTML = "<q>" + randomQuote + "</q>";
 }
 // create quote adding form
-/* 
-<div>
-      <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-      <input
-        id="newQuoteCategory"
-        type="text"
-        placeholder="Enter quote category"
-      />
-      <button onclick="addQuote()">Add Quote</button>
-    </div>
-*/
-
 let quoteFormDiv = document.createElement("div"),
 	userInputQuoteText = document.createElement("input"),
 	userInputQuoteCategory = document.createElement("input"),
@@ -73,6 +62,8 @@ function addQuote() {
   } else {
     addQuoteBtn.innerText = "Add Quote";
     quotes.push({ text: userInputQuoteText.value, category: userInputQuoteCategory.value });
+		// update localStorage 
+		window.localStorage.setItem('quotes', JSON.stringify([...quotes]))
     userInputQuoteText.value = "";
     userInputQuoteCategory.value = "";
   }
