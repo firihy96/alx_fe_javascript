@@ -1,18 +1,18 @@
 let quotes = [
   {
-    quote: "Everything you can imagine is real.",
+    text: "Everything you can imagine is real.",
     category: "cat-0",
   },
   {
-    quote: "Never regret anything that made you smile.",
+    text: "Never regret anything that made you smile.",
     category: "cat-1",
   },
   {
-    quote: "The manifesto of the dealmaker is simple: Reality is negotiable.",
+    text: "The manifesto of the dealmaker is simple: Reality is negotiable.",
     category: "cat-2",
   },
   {
-    quote: "Every moment is a fresh beginning.",
+    text: "Every moment is a fresh beginning.",
     category: "cat-3",
   },
 ];
