@@ -84,7 +84,18 @@ const JSONToFile = (obj, filename) => {
   a.click();
   URL.revokeObjectURL(url);
 };
-
+//Implement JSON Import: Provide a file input to allow users to upload a JSON file containing quotes. Read the file and update the quotes array and local storage accordingly.
+//
+function importFromJsonFile(event) {
+  const fileReader = new FileReader();
+  fileReader.onload = function(event) {
+    const importedQuotes = JSON.parse(event.target.result);
+    quotes.push(...importedQuotes);
+    saveQuotes();
+    alert('Quotes imported successfully!');
+  };
+  fileReader.readAsText(event.target.files[0]);
+}
 // After parsing html
 document.addEventListener("DOMContentLoaded", () => {
   newQuoteBtn.addEventListener("click", showRandomQuote);
