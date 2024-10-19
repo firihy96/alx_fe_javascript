@@ -90,10 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
   newQuoteBtn.addEventListener("click", showRandomQuote);
   createAddQuoteForm();
   addQuoteBtn.addEventListener("click", addQuote);
-
-  let exportButton = document.createElement("button");
-  exportButton.textContent = "Export Quotes";
-  document.querySelector("body").appendChild(exportButton);
+  let exportButton = document.getElementById("exportBtn");
   exportButton.addEventListener(
     "click",
     JSONToFile(...quotes, "Export Quotes")
