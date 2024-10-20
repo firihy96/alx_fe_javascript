@@ -148,3 +148,4 @@ document.addEventListener("DOMContentLoaded", () => {
   // Populate Categories Dynamically
   populateCategories(quotes);
 });
+// selectedCategory
