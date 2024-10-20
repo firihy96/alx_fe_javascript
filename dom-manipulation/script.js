@@ -8,13 +8,17 @@ let quotes = [
     category: "cat-1",
   },
   {
+    text: "555555",
+    category: "cat-1",
+  },
+  {
     text: "The manifesto of the dealmaker is simple: Reality is negotiable.",
     category: "cat-2",
   },
   {
     text: "Every moment is a fresh beginning.",
     category: "cat-3",
-  },
+  }
 ];
 function randomIntFromInterval(arrLength) {
   // min and max included
@@ -96,14 +100,51 @@ function importFromJsonFile(event) {
   };
   fileReader.readAsText(event.target.files[0]);
 }
+
+// Populate Categories Dynamically:
+/// Use the existing quotes array to extract unique categories and populate the dropdown menu.
+let selectCatGroup = document.getElementById('categoryFilter');
+function populateCategories(qts){
+// qts =[{text:'',category:''},...]
+let cats = JSON.parse(localStorage.getItem('quotes')).map(qt => qt.category);
+Array.from(new Set(cats), cat => {
+  let optionElement = document.createElement('option');
+  optionElement.setAttribute('value',cat);
+  optionElement.textContent = cat;
+  selectCatGroup.appendChild(optionElement)
+});
+}
+
+//Filter Quotes Based on Selected Category:Implement the filterQuotes function to update the displayed quotes based on the selected category.
+
+function filterQuotes(){
+  let filteredQuotes = JSON.parse(localStorage.getItem('quotes')).filter(qt => {
+    return qt.category === selectCatGroup.value
+  }).map(qt => '<q>' + qt.text + '</q>')
+  quoteDisplay.innerHTML =  filteredQuotes.join('<br>');
+  window.localStorage.setItem('lastUserSelection',JSON.stringify(selectCatGroup.value))
+}
+//Remember the Last Selected Filter: Use local storage to save the last selected category filter and restore it when the user revisits the page.
+function showLastUserSelection(){
+  if (JSON.parse(localStorage.getItem('lastUserSelection'))){
+    let filteredQuotes = quotes.filter(qt => {
+      return qt.category === JSON.parse(localStorage.getItem('lastUserSelection'))
+    }).map(qt => '<q>' + qt.text + '</q>')
+    quoteDisplay.innerHTML =  filteredQuotes.join('<br>');
+  }
+}
+
 // After parsing html
 document.addEventListener("DOMContentLoaded", () => {
+  showLastUserSelection();
   newQuoteBtn.addEventListener("click", showRandomQuote);
   createAddQuoteForm();
   addQuoteBtn.addEventListener("click", addQuote);
   let exportButton = document.getElementById("exportBtn");
-  exportButton.addEventListener(
-    "click",
-    JSONToFile(...quotes, "Export Quotes")
-  );
+  // exportButton.addEventListener(
+  //   "click",
+  //   JSONToFile(...quotes, "Export Quotes")
+  // );
+  // Populate Categories Dynamically
+  populateCategories(quotes);
 });
